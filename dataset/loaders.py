@@ -128,7 +128,7 @@ def my_common_voice(root_path, meta_files=None):
                 cols = line.rstrip().split('|')
                 speaker_name = cols[0]  
                 audio = os.path.join(language, "wavs", cols[0], cols[1])
-                full_audio = os.path.join(root_path, audio)
+                full_audio = phonemized_textphonemized_textos.path.join(root_path, audio)
                 assert os.path.isfile(full_audio), (
                     f'Referenced audio file {full_audio} does not exist!')
                 items.append([cols[2], audio, speaker_name, language])
@@ -147,7 +147,7 @@ def wav_data (root_path, meta_files=None):
                 cols = line.rstrip().split('|')       
                 audio = cols[0]
                 speaker_name = audio[0]
-                full_audio= root_path+ audio[0]
+                full_audio= root_path+"/Multilingual_Text_to_Speech/data/wav_data/"+audio[0]
                 full_audio = os.path.join(full_audio, audio)
                 items.append([cols[1], full_audio, speaker_name, language])
     return items
