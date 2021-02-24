@@ -2,7 +2,7 @@
 	"batch_size": 60,
 	"case_sensitive": false,
 	"characters": " أبتثجحخدذرزسشصضطظعغفقكلمنهويئءؤةاإآ",
-	"dataset": "news_data",
+	"dataset": "wav_data",
 	"encoder_dimension": 256,
 	"encoder_type": "simple",
 	"epochs": 300,
