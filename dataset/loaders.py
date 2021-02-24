@@ -133,3 +133,21 @@ def my_common_voice(root_path, meta_files=None):
                     f'Referenced audio file {full_audio} does not exist!')
                 items.append([cols[2], audio, speaker_name, language])
     return items
+
+def news_data (root_path, meta_files=None):
+    """Load news_data sound and meta files."""
+    if meta_files is None: meta_files = glob(f"{root_path}/data_file.txt", recursive=True)
+    meta_files.sort()
+    items = []
+    for meta_file in meta_files: 
+        language_dir = os.path.dirname(meta_file)
+        with open(meta_file, 'r', encoding='utf-8') as ttf:
+            language = 'ar' 
+            for line in ttf:
+                cols = line.rstrip().split('|')       
+                audio = cols[0]
+                speaker_name = audio[0]
+                full_audio= root_path+ audio[0]
+                full_audio = os.path.join(full_audio, audio)
+                items.append([cols[1], full_audio, speaker_name, language])
+    return items

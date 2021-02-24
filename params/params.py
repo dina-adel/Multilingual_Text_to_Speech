@@ -37,9 +37,9 @@ class Params:
     ******************* DATASET SPECIFICATION *******************
     """
     
-    dataset = "ljspeech"                 # one of: css10, ljspeech, vctk, my_blizzard, my_common_voice, mailabs, must have implementation in loaders.py
+    dataset = "news_data"                 # one of: css10, ljspeech, vctk, my_blizzard, my_common_voice, mailabs, must have implementation in loaders.py
     cache_spectrograms = True            # if True, during iterating the dataset, it first tries to load spectrograms (mel or linear) from cached files 
-    languages = ['en-us']                # list of lnguages which will be loaded from the dataset, codes should correspond to 
+    languages = ['ar']                # list of lnguages which will be loaded from the dataset, codes should correspond to 
                                          # espeak format (see 'phonemize --help) in order support the converion to phonemes
     balanced_sampling = False            # enables balanced sampling per languages (not speakers), multi_language must be True
     perfect_sampling = False             # used just if balanced_sampling is True, should be used together with encoder_type 'convolutional' or 'generated'
@@ -50,7 +50,8 @@ class Params:
     *************************** TEXT ****************************
     """
 
-    characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz '    # supported input alphabet, used for computation of character embeddings
+    characters = " أبتثجحخدذرزسشصضطظعغفقكلمنهويئءؤةاإآ"    
+    # supported input alphabet, used for computation of character embeddings
     # for lower-case russian, greek, latin and pinyin use " abcdefghijklmnopqrstuvwxyzçèéßäöōǎǐíǒàáǔüèéìūòóùúāēěīâêôûñőűабвгдежзийклмнопрстуфхцчшщъыьэюяё"
     case_sensitive = True                # if False, all characters are lowered before usage 
     remove_multiple_wspaces = True       # if True, multiple whitespaces, leading and trailing whitespaces, etc. are removed
@@ -59,7 +60,7 @@ class Params:
     punctuations_in  = '\'-'             # punctuation which can occur inside a word, so whitespaces do not have to be present
     use_phonemes = False                 # phonemes are valid only if True, model uses phonemes instead of characters
     # all phonemes of IPA: 'iyɨʉɯuɪʏʊeøɘəɵɤoɛœɜɞʌɔæɐaɶɑɒᵻʘɓǀɗǃʄǂɠǁʛpbtdʈɖcɟkɡqɢʔɴŋɲɳnɱmʙrʀⱱɾɽɸβfvθðszʃʒʂʐçʝxɣχʁħʕhɦɬɮʋɹɻjɰlɭʎʟˈˌːˑʍwɥʜʢʡɕʑɺɧ ɚ˞ɫ'
-    phonemes = 'ɹɐpbtdkɡfvθðszʃʒhmnŋlrwjeəɪɒuːɛiaʌʊɑɜɔx '   # supported input phonemes, used if use_phonemes is True
+    phonemes = 'iyɨʉɯuɪʏʊeøɘəɵɤoɛœɜɞʌɔæɐaɶɑɒᵻʘɓǀɗǃʄǂɠǁʛpbtdʈɖcɟkɡqɢʔɴŋɲɳnɱmʙrʀⱱɾɽɸβfvθðszʃʒʂʐçʝxɣχʁħʕhɦɬɮʋɹɻjɰlɭʎʟˈˌːˑʍwɥʜʢʡɕʑɺɧ ɚ˞ɫ '   # supported input phonemes, used if use_phonemes is True
 
     """
     ******************** PARAMETERS OF MODEL ********************
