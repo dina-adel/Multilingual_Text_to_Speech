@@ -51,25 +51,20 @@ if __name__ == '__main__':
 
         with open(os.path.join(d, fs), 'w', encoding='utf-8') as f:
             for i in m:
-                print("I am here")
                 idx, s, l, a, _, _, raw_text, ph = i
                 spec_name = idx + '.npy'      
                 audio_path = os.path.join(d, a)       
                 audio_data = audio.load(audio_path)
 
-                splitted_a = a.split("/")
-                if splitted_a[0] == "..":
-                    mel_path_partial = os.path.join(splitted_a[0], splitted_a[1], "spectrograms", spec_name)
-                    lin_path_partial = os.path.join(splitted_a[0], splitted_a[1], "linear_spectrograms", spec_name)
-                else:
-                    mel_path_partial = os.path.join("spectrograms", spec_name)
-                    lin_path_partial = os.path.join("linear_spectrograms", spec_name)
+                mel_path = os.path.join(spectrogram_dirs[0], spec_name)
+                lin_path = os.path.join(spectrogram_dirs[1], spec_name)
 
-                mel_path = os.path.join(d, mel_path_partial)
+                #mel_path = os.path.join(d, mel_path_partial)
                 if not os.path.exists(mel_path):
                     np.save(mel_path, audio.spectrogram(audio_data, True))
-                lin_path = os.path.join(d, lin_path_partial)
+
+                #lin_path = os.path.join(d, lin_path_partial)
                 if not os.path.exists(lin_path):
                     np.save(lin_path, audio.spectrogram(audio_data, False))
                 
-                print(f'{idx}|{s}|{l}|{a}|{mel_path_partial}|{lin_path_partial}|{raw_text}|{ph}', file=f)
+                print(f'{idx}|{s}|{l}|{a}|{mel_path}|{lin_path}|{raw_text}|{ph}', file=f)
