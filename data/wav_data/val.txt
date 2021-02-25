@@ -1,6 +1,6 @@
-006624|9|ar|/content/drive/MyDrive/speech_project/Multilingual_Text_to_Speech/data/wav_data/914/914-28.wav |||وينتج العراق أكثر من مليوني برميل يوميا من نفطه يصدر منها مليونا ونصف المليون برميل يوميا|
-006625|9|ar|/content/drive/MyDrive/speech_project/Multilingual_Text_to_Speech/data/wav_data/914/914-29.wav |||وقعت الحكومة المغربية عقد استثمار لمدة ثلاث سنوات مع شركة اتصالات المغرب بقيمة تقارب تسع مئة مليون دولار|
-006626|9|ar|/content/drive/MyDrive/speech_project/Multilingual_Text_to_Speech/data/wav_data/914/914-03.wav |||وذلك من أصل ربع مليار طفل في سوق العمل في العالم|
-006627|9|ar|/content/drive/MyDrive/speech_project/Multilingual_Text_to_Speech/data/wav_data/914/914-05.wav |||ويتوقع أن تبلغ مئة وخمسة وثمانين مليون شخص بحلول عام ألفين وعشرين|
-006628|9|ar|/content/drive/MyDrive/speech_project/Multilingual_Text_to_Speech/data/wav_data/914/914-11.wav |||كما دعمت سعر صرف العملة الأوروبية توقعات إيجابية بشأن أداء الاقتصاد الألماني|
-006629|9|ar|/content/drive/MyDrive/speech_project/Multilingual_Text_to_Speech/data/wav_data/914/914-30.wav |||وتتوقع الحكومة المغربية ارتفاع عدد الخطوط الهواتف النقالة في البلاد من خمسة عشر مليون خط إلى أربعة وعشرين مليونا في عام ألفين وعشرة|
+006624|914|ar|/content/drive/MyDrive/speech_project/Multilingual_Text_to_Speech/data/wav_data/914/914-28.wav |||وينتج العراق أكثر من مليوني برميل يوميا من نفطه يصدر منها مليونا ونصف المليون برميل يوميا|
+006625|914|ar|/content/drive/MyDrive/speech_project/Multilingual_Text_to_Speech/data/wav_data/914/914-29.wav |||وقعت الحكومة المغربية عقد استثمار لمدة ثلاث سنوات مع شركة اتصالات المغرب بقيمة تقارب تسع مئة مليون دولار|
+006626|914|ar|/content/drive/MyDrive/speech_project/Multilingual_Text_to_Speech/data/wav_data/914/914-03.wav |||وذلك من أصل ربع مليار طفل في سوق العمل في العالم|
+006627|914|ar|/content/drive/MyDrive/speech_project/Multilingual_Text_to_Speech/data/wav_data/914/914-05.wav |||ويتوقع أن تبلغ مئة وخمسة وثمانين مليون شخص بحلول عام ألفين وعشرين|
+006628|914|ar|/content/drive/MyDrive/speech_project/Multilingual_Text_to_Speech/data/wav_data/914/914-11.wav |||كما دعمت سعر صرف العملة الأوروبية توقعات إيجابية بشأن أداء الاقتصاد الألماني|
+006629|914|ar|/content/drive/MyDrive/speech_project/Multilingual_Text_to_Speech/data/wav_data/914/914-30.wav |||وتتوقع الحكومة المغربية ارتفاع عدد الخطوط الهواتف النقالة في البلاد من خمسة عشر مليون خط إلى أربعة وعشرين مليونا في عام ألفين وعشرة|
