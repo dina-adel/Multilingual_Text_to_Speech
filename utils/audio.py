@@ -11,10 +11,10 @@ from params.params import Params as hp
 
 def load(path):
     """Load a sound file into numpy array."""
-    print("file's path is ",path)
     data, sample_rate = sf.read(path.strip())
-    assert hp.sample_rate == sample_rate, (
-        f'Sample rate do not match: given {hp.sample_rate}, expected {sample_rate}')
+    print("sample_rate= %d and hp = %d",sample_rate, hp.sample_rate)
+    #assert hp.sample_rate == sample_rate, (
+    #    f'Sample rate do not match: given {hp.sample_rate}, expected {sample_rate}')
     return data
 
 
