@@ -136,7 +136,7 @@ def my_common_voice(root_path, meta_files=None):
 
 def wav_data (root_path, meta_files=None):
     """Load news_data sound and meta files."""
-    if meta_files is None: meta_files = glob(f"{root_path}/data_file_small.txt", recursive=True)
+    if meta_files is None: meta_files = glob(f"{root_path}/data_file.txt", recursive=True)
     meta_files.sort()
     items = []
     for meta_file in meta_files: 
