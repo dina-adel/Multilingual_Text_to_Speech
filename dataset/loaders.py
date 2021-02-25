@@ -148,6 +148,7 @@ def wav_data (root_path, meta_files=None):
                 audio = cols[0]
                 speaker_name = audio.split("-")[0]
                 full_audio= root_path+"/Multilingual_Text_to_Speech/data/wav_data/"+speaker_name
+                print(full_audio)
                 full_audio = os.path.join(full_audio, audio)
                 items.append([cols[1], full_audio, speaker_name, language])
     return items
