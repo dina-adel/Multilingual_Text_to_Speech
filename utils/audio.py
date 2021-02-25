@@ -13,8 +13,8 @@ def load(path):
     """Load a sound file into numpy array."""
     data, sample_rate = sf.read(path.strip())
     print("sample_rate= %d and hp = %d",sample_rate, hp.sample_rate)
-    #assert hp.sample_rate == sample_rate, (
-    #    f'Sample rate do not match: given {hp.sample_rate}, expected {sample_rate}')
+    assert hp.sample_rate == sample_rate, (
+        f'Sample rate do not match: given {hp.sample_rate}, expected {sample_rate}')
     return data
 
 
