@@ -44,13 +44,14 @@ if __name__ == '__main__':
     for d, fs in files_to_solve:
         with open(os.path.join(d,fs), 'r', encoding='utf-8') as f:
             metadata.append((d, fs, [line.rstrip().split('|') for line in f]))
-    print(metadata)
+    print("metadata is:::", metadata)
     print(f'Please wait, this may take a very long time.')
     for d, fs, m in metadata:  
         print(f'Creating spectrograms for: {fs}')
 
         with open(os.path.join(d, fs), 'w', encoding='utf-8') as f:
             for i in m:
+                print("I am here")
                 idx, s, l, a, _, _, raw_text, ph = i
                 spec_name = idx + '.npy'      
                 audio_path = os.path.join(d, a)       
