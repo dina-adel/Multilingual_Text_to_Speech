@@ -44,6 +44,7 @@ if __name__ == '__main__':
     for d, fs in files_to_solve:
         with open(os.path.join(d,fs), 'r', encoding='utf-8') as f:
             metadata.append((d, fs, [line.rstrip().split('|') for line in f]))
+    print(metadata)
     print(f'Please wait, this may take a very long time.')
     for d, fs, m in metadata:  
         print(f'Creating spectrograms for: {fs}')
@@ -69,5 +70,6 @@ if __name__ == '__main__':
                 lin_path = os.path.join(d, lin_path_partial)
                 if not os.path.exists(lin_path):
                     np.save(lin_path, audio.spectrogram(audio_data, False))
-
+                
+                break
                 print(f'{idx}|{s}|{l}|{a}|{mel_path_partial}|{lin_path_partial}|{raw_text}|{ph}', file=f)
