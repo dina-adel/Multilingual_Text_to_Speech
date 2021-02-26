@@ -193,7 +193,7 @@ if __name__ == '__main__':
     parser.add_argument('--hyper_parameters', type=str, default=None, help="Name of the hyperparameters file.")
     parser.add_argument('--logging_start', type=int, default=1, help="First epoch to be logged")
     parser.add_argument('--max_gpus', type=int, default=2, help="Maximal number of GPUs of the local machine to use.")
-    parser.add_argument('--loader_workers', type=int, default=2, help="Number of subprocesses to use for data loading.")
+    parser.add_argument('--loader_workers', type=int, default=1, help="Number of subprocesses to use for data loading.")
     args = parser.parse_args()
 
     # set up seeds and the target torch device
