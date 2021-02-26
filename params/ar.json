@@ -6,7 +6,7 @@
 	"encoder_dimension": 256,
 	"encoder_type": "simple",
 	"epochs": 300,
-	"languages": ["arabic"],
+	"languages": ["ar"],
 	"learning_rate_decay_start": 2500,
     "learning_rate_decay_each": 2500,
 	"multi_language": false,
