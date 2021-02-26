@@ -94,9 +94,8 @@ class TextToSpeechDataset(torch.utils.data.Dataset):
                     'text': line_tokens[6],
                     'phonemes': line_tokens[7]
                 }
-                print(hp.languages)
-                print(item['language'])
-                break
+                #print(hp.languages)
+                #print(item['language'])
                 if item['language'] in hp.languages:
                     print("uniq speakers {0} \nline_token[1] {1} \t".format(item['language'],line_tokens[1]))
                     if line_tokens[1] not in unique_speakers_set:
