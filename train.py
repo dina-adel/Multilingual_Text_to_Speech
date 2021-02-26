@@ -221,8 +221,7 @@ if __name__ == '__main__':
 
     # load dataset
     dataset = TextToSpeechDatasetCollection(os.path.join(args.data_root, hp.dataset))
-    print(dataset)
-    sys.exit()
+    #print(dataset)
     if hp.multi_language and hp.balanced_sampling and hp.perfect_sampling:
         dp_devices = args.max_gpus if hp.parallelization and torch.cuda.device_count() > 1 else 1 
         train_sampler = PerfectBatchSampler(dataset.train, hp.languages, hp.batch_size, data_parallel_devices=dp_devices, shuffle=True, drop_last=True)
@@ -235,7 +234,7 @@ if __name__ == '__main__':
                                 sampler=sampler, collate_fn=TextToSpeechCollate(True), num_workers=args.loader_workers)
         eval_data = DataLoader(dataset.dev, batch_size=hp.batch_size, drop_last=False, shuffle=False,
                                collate_fn=TextToSpeechCollate(True), num_workers=args.loader_workers)
-
+    sys.exit()
     # find out number of unique speakers and languages
     hp.speaker_number = 0 if not hp.multi_speaker else dataset.train.get_num_speakers()
     hp.language_number = 0 if not hp.multi_language else len(hp.languages)
