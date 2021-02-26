@@ -5,7 +5,7 @@ import math
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
-
+import sys
 from dataset.dataset import TextToSpeechDatasetCollection, TextToSpeechCollate
 from params.params import Params as hp
 from utils import audio, text
@@ -221,7 +221,7 @@ if __name__ == '__main__':
 
     # load dataset
     dataset = TextToSpeechDatasetCollection(os.path.join(args.data_root, hp.dataset))
-
+    sys.exit()
     if hp.multi_language and hp.balanced_sampling and hp.perfect_sampling:
         dp_devices = args.max_gpus if hp.parallelization and torch.cuda.device_count() > 1 else 1 
         train_sampler = PerfectBatchSampler(dataset.train, hp.languages, hp.batch_size, data_parallel_devices=dp_devices, shuffle=True, drop_last=True)

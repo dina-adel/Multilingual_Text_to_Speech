@@ -84,7 +84,7 @@ class TextToSpeechDataset(torch.utils.data.Dataset):
         with open(meta_file, 'r', encoding='utf-8') as f:
             for line in f:
                 print(line)
-                exit()
+                break
                 line_tokens = line[:-1].split('|')
                 item = {
                     'id': line_tokens[0],
