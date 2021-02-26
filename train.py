@@ -291,6 +291,7 @@ if __name__ == '__main__':
     # training loop
     best_eval = float('inf')
     for epoch in range(initial_epoch, hp.epochs):
+        print("epoch {0}".format(epoch))
         train(args.logging_start, epoch, train_data, model, criterion, optimizer)  
         if hp.learning_rate_decay_start - hp.learning_rate_decay_each < epoch * len(train_data):
             scheduler.step()
