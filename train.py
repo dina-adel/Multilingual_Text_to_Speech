@@ -234,7 +234,6 @@ if __name__ == '__main__':
                                 sampler=sampler, collate_fn=TextToSpeechCollate(True), num_workers=args.loader_workers)
         eval_data = DataLoader(dataset.dev, batch_size=hp.batch_size, drop_last=False, shuffle=False,
                                collate_fn=TextToSpeechCollate(True), num_workers=args.loader_workers)
-    sys.exit()
     # find out number of unique speakers and languages
     hp.speaker_number = 0 if not hp.multi_speaker else dataset.train.get_num_speakers()
     hp.language_number = 0 if not hp.multi_language else len(hp.languages)
