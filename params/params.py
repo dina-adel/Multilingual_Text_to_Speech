@@ -104,7 +104,7 @@ class Params:
     cbhg_highway_dimension = 128         # used if predict_linear is True
     cbhg_rnn_dim = 128                   # used if predict_linear is True
     cbhg_dropout = 0.0                   # used if predict_linear is True
-    multi_speaker = False                # if True, multi-speaker model is used, speaker embeddings are concatenated to encoder outputs
+    multi_speaker = True                # if True, multi-speaker model is used, speaker embeddings are concatenated to encoder outputs
     multi_language = False               # if True, multi-lingual model is used, language embeddings are concatenated to encoder outputs
     speaker_embedding_dimension = 32     # used if multi_speaker is True, size of the speaker embedding
     language_embedding_dimension = 4     # used if multi_language is True, size of the language embedding
