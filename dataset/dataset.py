@@ -29,7 +29,8 @@ class TextToSpeechDatasetCollection():
     def __init__(self, dataset_root_dir, training_file="train.txt", validation_file="val.txt", test_file=None):
         
         # create training set
-        train_full_path = os.path.join(dataset_root_dir, training_file)
+        train_full_path = '/root/Multilingual_Text_to_Speech/data/wav_data/train.txt'
+        #train_full_path = os.path.join(dataset_root_dir, training_file)
         if not os.path.exists(train_full_path):
             raise IOError(f'The training set meta-file not found, given: {train_full_path}')
         self.train = TextToSpeechDataset(train_full_path, dataset_root_dir)
