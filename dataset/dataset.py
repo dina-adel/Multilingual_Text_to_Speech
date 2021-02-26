@@ -101,8 +101,8 @@ class TextToSpeechDataset(torch.utils.data.Dataset):
                     if line_tokens[1] not in unique_speakers_set:
                         unique_speakers_set.add(line_tokens[1])
                         self.unique_speakers.append(line_tokens[1])
-                        print("item is: ", item)
-                        print("speakers: ", unique_speakers_set)
+                        #print("item is: ", item)
+                        #print("speakers: ", unique_speakers_set)
                     self.items.append(item)
 
         # clean text with basic stuff -- multiple spaces, case sensitivity and punctuation
@@ -149,7 +149,9 @@ class TextToSpeechDataset(torch.utils.data.Dataset):
 
         # load or compute spectrogram
         if hp.cache_spectrograms:
-            full_spec_path = os.path.join(self.root_dir, spectrogram_path)
+            path = '/content/drive/MyDrive/speech_project'
+            #full_spec_path = os.path.join(self.root_dir, spectrogram_path)
+            full_spec_path = os.path.join(path, spectrogram_path)
             spectrogram = np.load(full_spec_path)
         else:
             full_audio_path = os.path.join(self.root_dir, audio_path)
