@@ -26,11 +26,10 @@ class TextToSpeechDatasetCollection():
         validation_file (string, default 'val.txt'): Relative path to the meta-file of the validation set.
         test_file (string, default None): Relative path to the meta-file of the test set. Set None to ignore the test set.
     """
-    def __init__(self, dataset_root_dir, training_file="train.txt", validation_file="val.txt", test_file=None):
+    def __init__(self, dataset_root_dir, training_file="train.txt", validation_file="val.txt", test_file=True):
         
         # create training set
-        train_full_path = '/root/Multilingual_Text_to_Speech/data/wav_data/train.txt'
-        #train_full_path = os.path.join(dataset_root_dir, training_file)
+        train_full_path = os.path.join(dataset_root_dir, training_file)
         if not os.path.exists(train_full_path):
             raise IOError(f'The training set meta-file not found, given: {train_full_path}')
         self.train = TextToSpeechDataset(train_full_path, dataset_root_dir)
@@ -84,6 +83,7 @@ class TextToSpeechDataset(torch.utils.data.Dataset):
         self.items = []
         with open(meta_file, 'r', encoding='utf-8') as f:
             for line in f:
+                print(line)
                 line_tokens = line[:-1].split('|')
                 item = {
                     'id': line_tokens[0],
