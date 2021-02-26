@@ -26,7 +26,7 @@ class TextToSpeechDatasetCollection():
         validation_file (string, default 'val.txt'): Relative path to the meta-file of the validation set.
         test_file (string, default None): Relative path to the meta-file of the test set. Set None to ignore the test set.
     """
-    def __init__(self, dataset_root_dir, training_file="train.txt", validation_file="val.txt", test_file=True):
+    def __init__(self, dataset_root_dir, training_file="train.txt", validation_file="val.txt", test_file="test.txt"):
         
         # create training set
         train_full_path = os.path.join(dataset_root_dir, training_file)
@@ -83,8 +83,6 @@ class TextToSpeechDataset(torch.utils.data.Dataset):
         self.items = []
         with open(meta_file, 'r', encoding='utf-8') as f:
             for line in f:
-                print(line)
-                break
                 line_tokens = line[:-1].split('|')
                 item = {
                     'id': line_tokens[0],
@@ -100,6 +98,9 @@ class TextToSpeechDataset(torch.utils.data.Dataset):
                     if line_tokens[1] not in unique_speakers_set:
                         unique_speakers_set.add(line_tokens[1])
                         self.unique_speakers.append(line_tokens[1])
+                        print("item is: ", item)
+                        print("speakers: ", unique_speakers_set)
+                        break
                     self.items.append(item)
 
         # clean text with basic stuff -- multiple spaces, case sensitivity and punctuation
