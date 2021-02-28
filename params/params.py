@@ -10,7 +10,7 @@ class Params:
     """
     
     epochs = 50                         # training epochs
-    batch_size = 10                      # batch size during training (is parallelization is True, each GPU has batch_size // num_gpus examples)
+    batch_size = 1                      # batch size during training (is parallelization is True, each GPU has batch_size // num_gpus examples)
                                          # if using encoder_type 'convolutional' or 'generated', should be divisible by the number of languages 
     learning_rate = 1e-3                 # starting learning rate
     learning_rate_decay = 0.5            # decay multiplier used by step learning rate scheduler (use 0.5 for halving)
