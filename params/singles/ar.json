@@ -1,10 +1,10 @@
 {
-	"batch_size": 60,
+	"batch_size": 8,
 	"case_sensitive": false,
 	"characters": " أبتثجحخدذرزسشصضطظعغفقكلمنهويئءؤةاإآ",
 	"dataset": "wav_data",
 	"encoder_dimension": 256,
-	"encoder_type": "simple",
+	"encoder_type": "generated",
 	"epochs": 300,
 	"languages": ["arabic"],
 	"learning_rate_decay_start": 2500,
