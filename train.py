@@ -13,7 +13,7 @@ from modules.tacotron2 import Tacotron, TacotronLoss
 from utils.logging import Logger
 from utils.samplers import RandomImbalancedSampler, PerfectBatchSampler
 from utils import lengths_to_mask, to_gpu
-
+from tqdm import tqdm
 
 def cos_decay(global_step, decay_steps):
     """Cosine decay function
@@ -46,22 +46,18 @@ def train(logging_start_epoch, epoch, data, model, criterion, optimizer):
     done, start_time = 0, time.time()
 
     # loop through epoch batches
-    for i, batch in enumerate(data):     
-
+    for i, batch in tqdm(enumerate(data)):     
         global_step = done + epoch * len(data)
         optimizer.zero_grad() 
-
+        #print("len batch = ", len(batch))
         # parse batch
         batch = list(map(to_gpu, batch))
         src, src_len, trg_mel, trg_lin, trg_len, stop_trg, spkrs, langs = batch
-
         # get teacher forcing ratio
         if hp.constant_teacher_forcing: tf = hp.teacher_forcing
         else: tf = cos_decay(max(global_step - hp.teacher_forcing_start_steps, 0), hp.teacher_forcing_steps)
-
         # run the model
         post_pred, pre_pred, stop_pred, alignment, spkrs_pred, enc_output = model(src, src_len, trg_mel, trg_len, spkrs, langs, tf)
-        
         # evaluate loss function
         post_trg = trg_lin if hp.predict_linear else trg_mel
         classifier = model._reversal_classifier if hp.reversal_classifier else None
@@ -119,11 +115,10 @@ def evaluate(epoch, data, model, criterion):
             # parse batch
             batch = list(map(to_gpu, batch))
             src, src_len, trg_mel, trg_lin, trg_len, stop_trg, spkrs, langs = batch
-
-            # run the model (twice, with and without teacher forcing)
+            ########################################## run the model (twice, with and without teacher forcing)
             post_pred, pre_pred, stop_pred, alignment, spkrs_pred, enc_output = model(src, src_len, trg_mel, trg_len, spkrs, langs, 1.0)
-            post_pred_0, _, stop_pred_0, alignment_0, _, _ = model(src, src_len, trg_mel, trg_len, spkrs, langs, 0.0)
-            stop_pred_probs = torch.sigmoid(stop_pred_0)
+           #post_pred_0, _, stop_pred_0, alignment_0, _, _ = model(src, src_len, trg_mel, trg_len, spkrs, langs, 0.0)
+            #stop_pred_probs = torch.sigmoid(stop_pred_0)
 
             # evaluate loss function
             post_trg = trg_lin if hp.predict_linear else trg_mel
@@ -131,7 +126,7 @@ def evaluate(epoch, data, model, criterion):
             loss, batch_losses = criterion(src_len, trg_len, pre_pred, trg_mel, post_pred, post_trg, stop_pred, stop_trg, alignment, 
                                            spkrs, spkrs_pred, enc_output, classifier)
             
-            # compute mel cepstral distorsion
+            """################################### # compute mel cepstral distorsion
             for j, (gen, ref, stop) in enumerate(zip(post_pred_0, trg_mel, stop_pred_probs)):
                 stop_idxes = np.where(stop.cpu().numpy() > 0.5)[0]
                 stop_idx = min(np.min(stop_idxes) + hp.stop_frames, gen.size()[1]) if len(stop_idxes) > 0 else gen.size()[1]
@@ -142,7 +137,7 @@ def evaluate(epoch, data, model, criterion):
                     ref = audio.denormalize_spectrogram(ref, True)
                 if hp.predict_linear: gen = audio.linear_to_mel(gen)
                 mcd = (mcd_count * mcd + audio.mel_cepstral_distorision(gen, ref, 'dtw')) / (mcd_count+1)
-                mcd_count += 1
+                mcd_count += 1"""
 
             # compute adversarial classifier accuracy
             if hp.reversal_classifier:
@@ -165,7 +160,7 @@ def evaluate(epoch, data, model, criterion):
         eval_losses[k] /= len(data)
 
     # log evaluation
-    Logger.evaluation(epoch+1, eval_losses, mcd, src_len, trg_len, src, post_trg, post_pred, post_pred_0, stop_pred_probs, stop_trg, alignment_0, cla)
+   # Logger.evaluation(epoch+1, eval_losses, mcd, src_len, trg_len, src, post_trg, post_pred, post_pred_0, stop_pred_probs, stop_trg, alignment_0, cla)
     
     return sum(eval_losses.values())
 
@@ -186,14 +181,14 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--base_directory", type=str, default=".", help="Base directory of the project.")
-    parser.add_argument("--checkpoint", type=str, default=None, help="Name of the initial checkpoint.")
+    parser.add_argument("--checkpoint", type=str, default="generated_switching.pyt", help="Name of the initial checkpoint.")
     parser.add_argument("--checkpoint_root", type=str, default="checkpoints", help="Base directory of checkpoints.")
     parser.add_argument("--data_root", type=str, default="data", help="Base directory of datasets.")
     parser.add_argument("--flush_seconds", type=int, default=60, help="How often to flush pending summaries to tensorboard.")
     parser.add_argument('--hyper_parameters', type=str, default=None, help="Name of the hyperparameters file.")
     parser.add_argument('--logging_start', type=int, default=1, help="First epoch to be logged")
     parser.add_argument('--max_gpus', type=int, default=2, help="Maximal number of GPUs of the local machine to use.")
-    parser.add_argument('--loader_workers', type=int, default=1, help="Number of subprocesses to use for data loading.")
+    parser.add_argument('--loader_workers', type=int, default=2, help="Number of subprocesses to use for data loading.")
     args = parser.parse_args()
 
     # set up seeds and the target torch device
@@ -213,7 +208,6 @@ if __name__ == '__main__':
         checkpoint = os.path.join(checkpoint_dir, args.checkpoint)
         checkpoint_state = torch.load(checkpoint, map_location='cpu')
         hp.load_state_dict(checkpoint_state['parameters'])      
-
     # load hyperparameters
     if args.hyper_parameters is not None:
         hp_path = os.path.join(args.base_directory, 'params', f'{args.hyper_parameters}.json')
@@ -221,6 +215,7 @@ if __name__ == '__main__':
 
     # load dataset
     dataset = TextToSpeechDatasetCollection(os.path.join(args.data_root, hp.dataset))
+    #sys.exit()
     #print(dataset)
     if hp.multi_language and hp.balanced_sampling and hp.perfect_sampling:
         dp_devices = args.max_gpus if hp.parallelization and torch.cuda.device_count() > 1 else 1 
@@ -235,7 +230,7 @@ if __name__ == '__main__':
         eval_data = DataLoader(dataset.dev, batch_size=hp.batch_size, drop_last=False, shuffle=False,
                                collate_fn=TextToSpeechCollate(True), num_workers=args.loader_workers)
     # find out number of unique speakers and languages
-    hp.speaker_number = 0 if not hp.multi_speaker else dataset.train.get_num_speakers()
+    hp.speaker_number = 0 if not  hp.multi_speaker else dataset.train.get_num_speakers()
     hp.language_number = 0 if not hp.multi_language else len(hp.languages)
     # save all found speakers to hyper parameters
     if hp.multi_speaker and not args.checkpoint:
@@ -279,10 +274,10 @@ if __name__ == '__main__':
         model_dict.update(pretrained_dict) 
         model.load_state_dict(model_dict)
         # other states from checkpoint -- optimizer, scheduler, loss, epoch
-        initial_epoch = checkpoint_state['epoch'] + 1
-        optimizer.load_state_dict(checkpoint_state['optimizer'])
-        scheduler.load_state_dict(checkpoint_state['scheduler'])
-        criterion.load_state_dict(checkpoint_state['criterion'])
+        #initial_epoch = checkpoint_state['epoch'] + 1
+        #optimizer.load_state_dict(checkpoint_state['optimizer'])
+        #scheduler.load_state_dict(checkpoint_state['scheduler'])
+        #criterion.load_state_dict(checkpoint_state['criterion'])
 
     # initialize logger
     log_dir = os.path.join(args.base_directory, "logs", f'{hp.version}-{datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")}')
@@ -290,15 +285,26 @@ if __name__ == '__main__':
 
     # training loop
     best_eval = float('inf')
+    J=0
+    for para in model.parameters():
+       J+=1
+       if J<50:
+            para.requires_grad = False
+    print(J)                       
     for epoch in range(initial_epoch, hp.epochs):
         print("epoch {0}".format(epoch))
+        #print(model)
+        #sys.exit()                  
         train(args.logging_start, epoch, train_data, model, criterion, optimizer)  
         if hp.learning_rate_decay_start - hp.learning_rate_decay_each < epoch * len(train_data):
             scheduler.step()
-        eval_loss = evaluate(epoch, eval_data, model, criterion)   
+        eval_loss = evaluate(epoch, eval_data, model, criterion) 
+        print("Eval Loss = ",eval_loss)
+                           
         if (epoch + 1) % hp.checkpoint_each_epochs == 0:
             # save checkpoint together with hyper-parameters, optimizer and scheduler states
             checkpoint_file = f'{checkpoint_dir}/{hp.version}_loss-{epoch}-{eval_loss:2.3f}'
+           
             state_dict = {
                 'epoch': epoch,
                 'model': model.state_dict(),

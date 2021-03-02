@@ -149,9 +149,9 @@ class TextToSpeechDataset(torch.utils.data.Dataset):
 
         # load or compute spectrogram
         if hp.cache_spectrograms:
-            path = '/content/drive/MyDrive/speech_project'
-            #full_spec_path = os.path.join(self.root_dir, spectrogram_path)
-            full_spec_path = os.path.join(path, spectrogram_path)
+            #path = '/content/drive/MyDriv/speech_project'
+            full_spec_path = os.path.join(self.root_dir, spectrogram_path)
+            #full_spec_path = os.path.join(path, spectrogram_path)
             spectrogram = np.load(full_spec_path)
         else:
             full_audio_path = os.path.join(self.root_dir, audio_path)

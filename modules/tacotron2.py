@@ -237,27 +237,21 @@ class Tacotron(torch.nn.Module):
         self._embedding = Embedding(hp.symbols_count() + other_symbols, 
                                     hp.embedding_dimension, padding_idx=0)
         torch.nn.init.xavier_uniform_(self._embedding.weight)
-
         # Encoder transforming graphmenes or phonemes into abstract input representation
         self._encoder = self._get_encoder(hp.encoder_type)
-
         # Reversal language classifier to make encoder truly languagge independent
         if hp.reversal_classifier:
             self._reversal_classifier = self._get_adversarial_classifier(hp.reversal_classifier_type)
-
         # Prenet for transformation of previous predicted frame
         self._prenet = Prenet(hp.num_mels, hp.prenet_dimension, hp.prenet_layers, hp.dropout)     
-
         # Speaker and language embeddings make decoder bigger
         decoder_input_dimension = hp.encoder_dimension
         if hp.multi_speaker:
             decoder_input_dimension += hp.speaker_embedding_dimension
         if hp.multi_language:
             decoder_input_dimension += hp.language_embedding_dimension
-        
         # Decoder attention layer 
         self._attention = self._get_attention(hp.attention_type, decoder_input_dimension)
-        
         # Instantiate decoder RNN layers
         gen_cell_dimension = decoder_input_dimension + hp.decoder_dimension
         att_cell_dimension = decoder_input_dimension + hp.prenet_dimension
@@ -267,7 +261,6 @@ class Tacotron(torch.nn.Module):
         else:
             generator_rnn = DropoutLSTMCell(gen_cell_dimension, hp.decoder_dimension, hp.dropout_hidden) 
             attention_rnn = DropoutLSTMCell(att_cell_dimension, hp.decoder_dimension, hp.dropout_hidden)
-
         # Decoder which controls attention and produces mel frames and stop tokens 
         self._decoder = Decoder(
                         hp.num_mels, 
@@ -279,7 +272,6 @@ class Tacotron(torch.nn.Module):
                         self._prenet, 
                         hp.prenet_dimension,
                         hp.max_output_length)      
-
         # Postnet transforming predicted mel frames (residual mel or linear frames)
         self._postnet = self._get_postnet("cbhg" if hp.predict_linear else "conv")
 
