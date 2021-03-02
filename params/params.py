@@ -119,6 +119,7 @@ class Params:
     speaker_number = 0                   # do not set!
     language_number = 0                  # do not set!
 
+    uniqiue_speakers = [1,2,3,4,5,6,7]
     """
     ******************** PARAMETERS OF AUDIO ********************
     """
